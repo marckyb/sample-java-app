@@ -16,6 +16,11 @@ phases:
   post_build:
     commands:
       - echo Unit tests completed on `date`
+      - |
+        if [ $(grep -c "<failure" target/surefire-reports/*.xml) -gt 0 ]; then
+           echo "ERROR: Unit tests have failures"
+           exit 1
+        fi
 
 reports:
   junit:
